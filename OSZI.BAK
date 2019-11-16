@@ -136,6 +136,7 @@ begin (* Scope *)
   initgraph(g800x600);
 {$endif}
 
+  rect(0,0,640,100,1);
 
 
   for i := 0 to 63 do
@@ -170,7 +171,6 @@ begin (* Scope *)
 
   schwelle := 128*3;
 
-  rect(0,0,800,200,1);
   repeat
     for ic := startx to N do begin
       (* Zeitmessung starten *)

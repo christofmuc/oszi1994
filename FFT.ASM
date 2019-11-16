@@ -181,5 +181,44 @@ amplitude proc
         ret
 amplitude endp
 
+
+;
+; Berechnen der Amplitude des komplexen Ergebnisses der FFT
+;
+; Logarithmieren und Skalieren mit Faktor scale
+;
+
+        public amplitudelog
+amplitudelog proc
+
+        mov   di, 0
+        mov   si, 0
+        mov   cx, N
+        shr   cx, 1
+        fld   qword ptr scale
+
+@@loop2:
+        fld   qword ptr [fr+di]
+        fmul  st, st
+        fld   qword ptr [fi+di]
+        fmul  st, st
+        faddp
+        fsqrt
+;        fld1                            ;
+;        fxch                            ;
+;        fyl2x                           ;
+        fsqrt                           ;
+        fmul  st, st(1)
+        fistp word ptr [amp+si]
+        add   di, 8
+        add   si, 2
+        dec   cx
+        jnz @@loop2
+
+        finit
+
+        ret
+amplitudelog endp
+
         END
 
